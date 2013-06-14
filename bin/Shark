@@ -504,7 +504,7 @@ OptionParser.new do |opts|
 
   opts.on("-m", "--buildmac", "Builds Mac Executables") do
 
-    file_path = Dir.pwd + "/Shark.rb"
+    file_path = Dir.pwd + "/shark.rb"
 
     create_mac_executable(file_path)
 
