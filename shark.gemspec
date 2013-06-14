@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'shark/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "Shark"
+  spec.name          = "shark"
   spec.version       = Shark::VERSION
   spec.authors       = ["Adhithya Rajasekaran"]
   spec.email         = ["adhithyan15@gmail.com"]
