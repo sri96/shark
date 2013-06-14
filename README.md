@@ -1,4 +1,4 @@
-shark
+Shark
 =====
 
-Shark is a simple testing tool for file operations
+Shark is a simple testing tool for file operations. 
