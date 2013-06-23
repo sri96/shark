@@ -368,6 +368,18 @@ class Shark
 
       end
 
+      def reset_test_files_directory(original_file_list,after_file_list)
+
+        added_files = after_file_list-original_file_list
+
+        added_files.each do |file_name|
+
+          File.delete(file_name)
+
+        end
+
+      end
+
       configuration_variable_index = configuration_variable_index.collect{ |element| element[0]}
 
       configuration_variable_index << configurations.length-1
@@ -412,6 +424,10 @@ class Shark
 
     Dir.foreach(@features_directory) { |x| list_of_features << @features_directory+"#{x}" }
 
+    initial_files_list = []
+
+    Dir.foreach(@files_directory) { |x| initial_files_list << @files_directory+"#{x}" }
+
     list_of_features = list_of_features.reject { |path| !path.include?(".feature")}
 
     list_of_features.each do |feature_path|
@@ -447,6 +463,12 @@ class Shark
       puts "\n"
 
     end
+
+    after_files_list = []
+
+    Dir.foreach(@files_directory) { |x| after_files_list << @files_directory+"#{x}" }
+
+    reset_test_files_directory(initial_files_list,after_files_list)
 
   end
 
