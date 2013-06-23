@@ -412,7 +412,7 @@ class Shark
 
     Dir.foreach(@features_directory) { |x| list_of_features << @features_directory+"#{x}" }
 
-    list_of_features.delete_at(0); list_of_features.delete_at(0)
+    list_of_features = list_of_features.reject { |path| !path.include?(".feature")}
 
     list_of_features.each do |feature_path|
 
