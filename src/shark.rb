@@ -110,15 +110,19 @@ class Shark
 
       modified_scenarios = scenarios.dup
 
+      scenario_names = []
+
       scenarios.each_with_index do |s,index|
 
         scenario_steps = s[0].split("    ")[1..-1]
+
+        scenario_names << s[0].split("    ")[0]
 
         modified_scenarios[index] << scenario_steps
 
       end
 
-      return feature_name,modified_scenarios
+      return feature_name,scenario_names,modified_scenarios
 
     end
 
@@ -416,11 +420,13 @@ class Shark
 
       feature_contents,configurations,config_values = extract_configurations(feature_contents)
 
-      feature_name,scenarios = parse_feature(feature_contents)
+      feature_name,scenario_names,scenarios = parse_feature(feature_contents)
 
       puts feature_name
 
-      scenarios.each do |scenario|
+      scenarios.each_with_index do |scenario,index|
+
+        puts "\n#{scenario_names[index]}"
 
         scenario[1] = scenario[1].collect{|element| element.sub("input","$input")}
 
@@ -434,9 +440,11 @@ class Shark
 
         output = parse_and_test_steps(scenario[1],@files_directory,configurations,config_values,@base_path)
 
-        puts output + "\n\n"
+        puts output
 
       end
+
+      puts "\n"
 
     end
 
