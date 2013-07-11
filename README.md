@@ -18,7 +18,8 @@ Or install it yourself as:
 
 ## Usage
 
-It has a cucumber like syntax and is intended to be used to test file operations. 
+It has a cucumber like syntax and is intended to be used to test file operations. You can read detailed documentation
+at https://github.com/adhithyan15/shark/wiki/Documentation
 
 ## Contributing
 
