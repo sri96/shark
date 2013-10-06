@@ -286,7 +286,7 @@ class Shark
 
           if matching_file.eql?(output_file)
 
-             test_results << true
+            test_results << true
 
           else
 
@@ -420,6 +420,20 @@ class Shark
 
     end
 
+    def find_file_name(input_path,file_extension)
+
+      extension_remover = input_path.split(file_extension)
+
+      remaining_string = extension_remover[0].reverse
+
+      path_finder = remaining_string.index("/")
+
+      remaining_string = remaining_string.reverse
+
+      return remaining_string[remaining_string.length-path_finder..-1]
+
+    end
+
     list_of_features = []
 
     Dir.foreach(@features_directory) { |x| list_of_features << @features_directory+"#{x}" }
@@ -464,7 +478,9 @@ class Shark
 
         unless test_result
 
-          failed_tests << feature_name
+          puts feature_path
+
+          failed_tests << (find_file_name(feature_path,".feature") + ".feature")
 
         end
 
@@ -484,7 +500,7 @@ class Shark
 
     unless failed_tests.empty?
 
-      puts "Failing: #{failed_tests.length}\n"
+      puts "Failing: #{failed_tests.length}\n\n"
 
       puts "The following feature tests failed:\n\n"
 
@@ -494,9 +510,11 @@ class Shark
 
       end
 
+      puts "\n"
+
     else
 
-      puts "All of your tests passed!\n"
+      puts "\n\nAll of your tests passed!\n\n"
 
     end
 
