@@ -322,11 +322,11 @@ class Shark
 
         end
 
-        return output_string = output_string + detailed_fail_list
+        return output_string = output_string + detailed_fail_list, false
 
       else
 
-        return "\nYour test file(s) passed the feature test.\n\n"
+        return "\nYour test file(s) passed the feature test.\n\n", true
 
       end
 
@@ -430,6 +430,10 @@ class Shark
 
     list_of_features = list_of_features.reject { |path| !path.include?(".feature")}
 
+    test_results = []
+
+    failed_tests = []
+
     list_of_features.each do |feature_path|
 
       feature_contents = read_file_line_by_line(feature_path)
@@ -454,13 +458,45 @@ class Shark
 
         scenario[1] = scenario[1].collect{|element| element.sub("equal","$equal")}
 
-        output = parse_and_test_steps(scenario[1],@files_directory,configurations,config_values,@base_path)
+        output,test_result = parse_and_test_steps(scenario[1],@files_directory,configurations,config_values,@base_path)
+
+        test_results << test_result
+
+        unless test_result
+
+          failed_tests << feature_name
+
+        end
 
         puts output
 
       end
 
       puts "\n"
+
+    end
+
+    puts "Test Statistics:\n\n"
+
+    puts "Total Number of Tests: #{test_results.length}\n"
+
+    puts "Passing: #{test_results.length-failed_tests.length}\n"
+
+    unless failed_tests.empty?
+
+      puts "Failing: #{failed_tests.length}\n"
+
+      puts "The following feature tests failed:\n\n"
+
+      failed_tests.each do |tes|
+
+        puts tes + "\n"
+
+      end
+
+    else
+
+      puts "All of your tests passed!\n"
 
     end
 
